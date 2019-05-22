@@ -80,7 +80,7 @@ function parse(json) {
   return obj;
 }
 
-if (module.exports === 'object') {
+if (typeof module === 'object' && module.exports === 'object') {
   module.exports = {
     stringify: stringify,
   }

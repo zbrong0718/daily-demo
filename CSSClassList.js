@@ -1,9 +1,8 @@
 /**
  * CSS Class List
- * https://github.com/jesson_wang/css-class-list
+ * https://github.com/zbrong0718/daily-demo/blob/master/CSSClassList.js
  * 
  * Copyright (c) since 2018 by Jesson Wang
- * Released under the MIT license
  */
 
  (function(global, factory) {

@@ -14,13 +14,13 @@ function stringify(o) {
     }
     var hasCircle = false, cache = [];
     (function cycle(o) {
-      if (cache.includes(o)) {
+      if ( cache.indexOf(o) > -1 ) {
         return hasCircle = true;
       }
       cache.push(o);
-      for( var k in o) {
+      for( var k in o ) {
         var v = o[k];
-        if (_isPlainObject(o)) {
+        if ( _isPlainObject(o) ) {
           cycle(v);
         }
       }
@@ -58,7 +58,7 @@ function stringify(o) {
   };
 
   type = _type(o);
-  if (type in handler) {
+  if ( type in handler ) {
     if ( !_isCircle(o) ) 
       ret = handler[type]();
     else
@@ -70,7 +70,7 @@ function stringify(o) {
   return ret;
 }
 
-function parse() {
+function parse(json) {
   var rx_one = /^[\],:{}\s]*$/; var rx_two = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g;
   var rx_three = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g;
   var rx_four = /(?:^|:|,)(?:\s*\[)+/g;
@@ -78,4 +78,10 @@ function parse() {
     var obj = eval( "(" +json + ")" );
   }
   return obj;
+}
+
+if (module.exports === 'object') {
+  module.exports = {
+    stringify: stringify,
+  }
 }

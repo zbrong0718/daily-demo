@@ -205,7 +205,7 @@ difference = function(arr, rest) {
   var flatted;
   arr = flattern(arr);
   rest = flattern(rest);
-  flatted = unique( arr.concat( rest) );
+  flatted = unique( arr.concat( rest ) );
   return filter(flatted, function(val) {
     return !contains(arr, val) || !contains(rest, val);
   });

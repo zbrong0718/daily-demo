@@ -43,14 +43,15 @@ function stringify(o) {
     array: function() {
       var arr = [];
       for(var i = 0, len = o.length; i < o.length; i++) {
-        arr.push( _fmt( o[i] ) );
+        if ( typeof o[i] !== 'undefined' )
+          arr.push( _fmt( o[i] ) );
       }
       return '[' + arr.join(',') + ']';
     },
     object: function() {
       var arr = [];
       for( var k in o ) {
-        if (!o.hasOwnProperty(k)) continue;
+        if (!o.hasOwnProperty(k) || typeof o[k] === 'undefined') continue;
         arr.push( _quot(k) + ':' + _fmt(o[k]) );
       }
       return '{' + arr.join(',') + '}';

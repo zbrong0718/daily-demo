@@ -1,4 +1,0 @@
-(function($){
-	'user strict';
-	
-})(jQuery);

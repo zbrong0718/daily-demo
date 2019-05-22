@@ -1,36 +1,23 @@
-function num2CNnum (num) {
-    num = +num || 0;
-    num = num.toFixed(2);
-    // 整数部分
-    var sIntPart = num.substr(0, num.length - 3);
-    // 小数部分
-    var sDecimalPart = +num.slice(-2) ? num.slice(-2) : '';
-    // 大写汉字数字
-    var aCNNumbers = [ '零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖' ];
-    // 大写整数单位
-    var aUnits = [ '元', '拾', '佰', '仟', '万', '拾万', '佰万', '仟万', '亿', '拾亿', '佰亿', '仟亿', '兆', '拾兆', '佰兆', '仟兆' ];
-    // 小数单位
-    var aDecimalUnits = ['角','分'];
-    var ret = '', curNum, unit, sNumber, iIntLen = sIntPart.length,
-
-    // 整数部分
-    len = iIntLen, unitLen = aUnits.length, i = 0;
-    while(len) {
-        curNum = +sIntPart[ i++ ];
-        unit = aUnits[ len - 1 ];
-        sNumber = aCNNumbers[ curNum ];
-        ret += sNumber + unit;
-        len --;
+function DX(n) {
+    if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n)) return "数据非法";
+    var unit = "京亿万仟佰拾兆万仟佰拾亿仟佰拾万仟佰拾元角分", str = "";
+    n += "00";
+    var p = n.indexOf('.');
+    if (p >= 0) {
+        n = n.substring(0, p) + n.substr(p+1, 2);
     }
+    unit = unit.substr(unit.length - n.length);
 
-    // 小数部分
-    len = sDecimalPart.length; unitLen = aDecimalUnits.length; i = 0;
-    while(len) {
-        curNum = +sDecimalPart[ i++ ];
-        unit = curNum ? aDecimalUnits[ unitLen - len ] : '';
-        ret += aCNNumbers[ curNum ] + unit;
-        len--;
+    for (var i=0; i < n.length; i++) {
+        str += '零壹贰叁肆伍陆柒捌玖'.charAt(n.charAt(i)) + unit.charAt(i);    
     }
-
-    return unit === '元' ? ret + '整' : ret;
+    return str.replace(/零(?:仟|佰|拾|角)/g, "零")
+    .replace(/(?:零)+/g, "零")
+    .replace(/零(兆|万|亿|元)/g, "$1")
+    .replace(/(兆|亿)万/g, "$1")
+    .replace(/(京|兆)亿/g, "$1")
+    .replace(/(京)兆/g, "$1")
+    .replace(/(京|兆|亿|仟|佰|拾)(万?)(.)仟/g, "$1$2零$3仟")
+    .replace(/^元零?|零分/g, "")
+    .replace(/(元)$/g, "$1整");
 }

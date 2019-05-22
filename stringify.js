@@ -34,7 +34,7 @@ function stringify(o) {
   };
 
   var _fmt = function(s) {
-    if ( s && typeof s === 'object' )
+    if ( s != null && typeof s === 'object' )
       return stringify(s)
     return typeof s === 'string' ? _quot(s) : s
   };
